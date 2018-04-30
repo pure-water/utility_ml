@@ -1,4 +1,4 @@
-#！ /usr/bin/env python
+#!  /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 #__author__      = "Barack Obama"
@@ -11,7 +11,7 @@ from keras.applications.mobilenet import MobileNet
 run_meta = tf.RunMetadata()
 with tf.Session(graph=tf.Graph()) as sess:
     K.set_session(sess)
-    net = MobileNet( input_tensor=tf.placeholder('float32', shape=(1,32,32,3)),include_top=False)
+    net = MobileNet(input_tensor=tf.placeholder('float32', shape=(1,224,224,3)),include_top=False)
 
     opts = tf.profiler.ProfileOptionBuilder.float_operation()    
     flops = tf.profiler.profile(sess.graph, run_meta=run_meta, cmd='op', options=opts)
