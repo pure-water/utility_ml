@@ -11,8 +11,18 @@ from keras.applications.mobilenet import MobileNet
 run_meta = tf.RunMetadata()
 with tf.Session(graph=tf.Graph()) as sess:
     K.set_session(sess)
+
     net = MobileNet(input_tensor=tf.placeholder('float32', shape=(1,224,224,3)),include_top=False)
 
+    output = Conv2D(30, 
+                        (1,1), strides=(1,1), 
+                        padding='same', 
+                        name='DetectionLayer', 
+                        kernel_initializer='lecun_normal')(net)
+    output = Reshape((self.grid_h, self.grid_w, self.nb_box, 4 + 1 + self.nb_class))(output)
+
+
+    # Profile
     opts = tf.profiler.ProfileOptionBuilder.float_operation()    
     flops = tf.profiler.profile(sess.graph, run_meta=run_meta, cmd='op', options=opts)
 
