@@ -7,6 +7,10 @@
 import tensorflow as tf
 import keras.backend as K
 from keras.applications.mobilenet import MobileNet
+from keras.models import Model
+from keras.layers import Reshape, Activation, Conv2D, Input, MaxPooling2D, BatchNormalization, Flatten, Dense, Lambda
+
+
 
 run_meta = tf.RunMetadata()
 with tf.Session(graph=tf.Graph()) as sess:
@@ -17,9 +21,9 @@ with tf.Session(graph=tf.Graph()) as sess:
     output = Conv2D(30, 
                         (1,1), strides=(1,1), 
                         padding='same', 
-                        name='DetectionLayer', 
-                        kernel_initializer='lecun_normal')(net)
-    output = Reshape((self.grid_h, self.grid_w, self.nb_box, 4 + 1 + self.nb_class))(output)
+                        name='DetectionLayer'
+                    ) 
+    output = Reshape((13,13,30, 5,6))(output)
 
 
     # Profile
