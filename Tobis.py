@@ -18,15 +18,16 @@ with tf.Session(graph=tf.Graph()) as sess:
     K.set_session(sess)
 
     input_image = Input(shape=(input_size, input_size, 3))
+
     mobilenet = MobileNet(input_tensor=tf.placeholder('float32',shape=(1,224,224,3)),include_top=False,input_shape=(input_size,input_size,3))(input_image)
 
-    final = Conv2D(30,(1,1),strides=(1,1),padding='same',name='DetectoinLayer')(mobilenet)
+    detect = Conv2D(30,(1,1),strides=(1,1),padding='same',name='DetectoinLayer')(mobilenet)
 
-    model = Model(input_image,final)
-    model.summary()
+    yolo = Model(input_image,detect)
+    yolo.summary()
 
     optimizer = Adam(lr=1e-4, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
-    model.compile(loss='mean_squared_error', optimizer=optimizer)
+    yolo.compile(loss='mean_squared_error', optimizer=optimizer)
     
 
     #sess.run(feature)
