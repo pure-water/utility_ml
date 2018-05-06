@@ -10,20 +10,24 @@ import numpy as np
 
 run_meta = tf.RunMetadata()
 
-input_size= 224
+input_size= 416
 
 
 with tf.Session(graph=tf.Graph()) as sess:
 
     K.set_session(sess)
 
-    input_image = Input(shape=(input_size, input_size, 3))
+    input_image = Input(shape=(input_size, input_size, 3),name="input1")
 
-    mobilenet = MobileNet(input_tensor=tf.placeholder('float32',shape=(1,224,224,3)),include_top=False,input_shape=(input_size,input_size,3))(input_image)
+    #mobilenet = MobileNet(input_tensor=tf.placeholder('float32',shape=(1,input_size,input_size,3)),include_top=False,input_shape=(input_size,input_size,3),weights=None)(input_image)
+    mobilenet = MobileNet(input_tensor=input_image,include_top=False,input_shape=(input_size,input_size,3),weights=None)(input_image)
 
     detect = Conv2D(30,(1,1),strides=(1,1),padding='same',name='DetectoinLayer')(mobilenet)
+    detect  = Reshape((13, 13, 5, 6))(detect)
 
+    
     yolo = Model(input_image,detect)
+    print(detect)
     yolo.summary()
 
     optimizer = Adam(lr=1e-4, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
