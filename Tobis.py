@@ -7,6 +7,9 @@ from keras.models import Model
 from keras.layers import Reshape, Activation, Conv2D, Input, MaxPooling2D, BatchNormalization, Flatten, Dense, Lambda
 from keras.optimizers import SGD, Adam, RMSprop
 import numpy as np
+from keras.utils import plot_model
+
+
 
 run_meta = tf.RunMetadata()
 
@@ -19,14 +22,14 @@ with tf.Session(graph=tf.Graph()) as sess:
 
     input_image = Input(shape=(input_size, input_size, 3),name="input1")
 
-    #mobilenet = MobileNet(input_tensor=tf.placeholder('float32',shape=(1,input_size,input_size,3)),include_top=False,input_shape=(input_size,input_size,3),weights=None)(input_image)
-    mobilenet = MobileNet(input_tensor=input_image,include_top=False,input_shape=(input_size,input_size,3),weights=None)(input_image)
-
-    detect = Conv2D(30,(1,1),strides=(1,1),padding='same',name='DetectoinLayer')(mobilenet)
+    mobilenet  = MobileNet(input_tensor=tf.placeholder('float32',shape=(1,input_size,input_size,3)),include_top=False,input_shape=(input_size,input_size,3),weights=None)(input_image)
+    #mobilenet = MobileNet(include_top=False,input_shape=(input_size,input_size,3),weights=None)
+    detect = Conv2D(30,(1,1),strides=(1,1),padding='same',name='DetectoinLayer0')(mobilenet)
     detect  = Reshape((13, 13, 5, 6))(detect)
 
     
     yolo = Model(input_image,detect)
+    plot_model(yolo, to_file='yolo.png')
     print(detect)
     yolo.summary()
 
