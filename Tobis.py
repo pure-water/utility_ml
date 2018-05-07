@@ -24,7 +24,6 @@ max_box_per_image = 10
 
 
 with tf.Session(graph=tf.Graph()) as sess:
-
     K.set_session(sess)
 
     input_image = Input(shape=(input_size, input_size, 3),name="input1")
@@ -58,9 +57,9 @@ with tf.Session(graph=tf.Graph()) as sess:
 
     #Profiling ... 
     opts = tf.profiler.ProfileOptionBuilder.float_operation()    
-    flops = tf.profiler.profile(sess.graph, run_meta=run_meta, cmd='op', options=opts)
+    flops = tf.profiler.profile(sess.graph, run_meta=run_meta, cmd='scope', options=opts)
 
     opts = tf.profiler.ProfileOptionBuilder.trainable_variables_parameter()    
-    params = tf.profiler.profile(sess.graph, run_meta=run_meta, cmd='op', options=opts)
+    params = tf.profiler.profile(sess.graph, run_meta=run_meta, cmd='scope', options=opts)
 
     print("{:,} --- {:,}".format(flops.total_float_ops, params.total_parameters))
