@@ -9,13 +9,6 @@ from keras.optimizers import SGD, Adam, RMSprop
 import numpy as np
 from keras.utils import plot_model
 
-#import keras
-#def get_trainable_params(model):
-#    params = []
-#    for layer in model.layers:
-#        params += keras.engine.training.collect_trainable_weights(layer)
-#    return params
-
 
 run_meta = tf.RunMetadata()
 
@@ -61,16 +54,17 @@ with tf.Session(graph=tf.Graph()) as sess:
     #mobilenet.evaluate(x=X)
 
     #Profiling ... 
-    opts = tf.profiler.ProfileOptionBuilder.float_operation()    
-    flops = tf.profiler.profile(sess.graph, run_meta=run_meta, cmd='scope', options=opts)
+    opts = tf.profiler.ProfileOptionBuilder.trainable_variables_parameter()    
+    params = tf.profiler.profile(sess.graph, run_meta=run_meta, cmd='scope', options=opts)
+
+    #opts = tf.profiler.ProfileOptionBuilder.float_operation()    
+    #flops = tf.profiler.profile(sess.graph, run_meta=run_meta, cmd='scope', options=opts)
 
     opts = tf.profiler.ProfileOptionBuilder.float_operation()    
     flops = tf.profiler.profile(sess.graph, run_meta=run_meta, cmd='op', options=opts)
 
-    opts = tf.profiler.ProfileOptionBuilder.float_operation()    
-    flops = tf.profiler.profile(sess.graph, run_meta=run_meta, cmd='code', options=opts)
+    #opts = tf.profiler.ProfileOptionBuilder.float_operation()    
+    #flops = tf.profiler.profile(sess.graph, run_meta=run_meta, cmd='code', options=opts)
 
-    opts = tf.profiler.ProfileOptionBuilder.trainable_variables_parameter()    
-    params = tf.profiler.profile(sess.graph, run_meta=run_meta, cmd='scope', options=opts)
 
     print("{:,} --- {:,}".format(flops.total_float_ops, params.total_parameters))
