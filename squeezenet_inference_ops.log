@@ -1,0 +1,304 @@
+squeezenet
+Tensor("fire9/concat/concat:0", shape=(1, 13, 13, 512), dtype=float32)
+Tensor("DetectoinLayer0/BiasAdd:0", shape=(1, 13, 13, 30), dtype=float32)
+Tensor("lambda_1/Identity:0", shape=(1, 13, 13, 5, 6), dtype=float32)
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+input1 (InputLayer)             (None, 224, 224, 3)  0                                            
+__________________________________________________________________________________________________
+conv1 (Conv2D)                  (None, 111, 111, 64) 1792        input1[0][0]                     
+__________________________________________________________________________________________________
+relu_conv1 (Activation)         (None, 111, 111, 64) 0           conv1[0][0]                      
+__________________________________________________________________________________________________
+pool1 (MaxPooling2D)            (None, 55, 55, 64)   0           relu_conv1[0][0]                 
+__________________________________________________________________________________________________
+fire2/squeeze1x1 (Conv2D)       (None, 55, 55, 16)   1040        pool1[0][0]                      
+__________________________________________________________________________________________________
+fire2/relu_squeeze1x1 (Activati (None, 55, 55, 16)   0           fire2/squeeze1x1[0][0]           
+__________________________________________________________________________________________________
+fire2/expand1x1 (Conv2D)        (None, 55, 55, 64)   1088        fire2/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire2/expand3x3 (Conv2D)        (None, 55, 55, 64)   9280        fire2/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire2/relu_expand1x1 (Activatio (None, 55, 55, 64)   0           fire2/expand1x1[0][0]            
+__________________________________________________________________________________________________
+fire2/relu_expand3x3 (Activatio (None, 55, 55, 64)   0           fire2/expand3x3[0][0]            
+__________________________________________________________________________________________________
+fire2/concat (Concatenate)      (None, 55, 55, 128)  0           fire2/relu_expand1x1[0][0]       
+                                                                 fire2/relu_expand3x3[0][0]       
+__________________________________________________________________________________________________
+fire3/squeeze1x1 (Conv2D)       (None, 55, 55, 16)   2064        fire2/concat[0][0]               
+__________________________________________________________________________________________________
+fire3/relu_squeeze1x1 (Activati (None, 55, 55, 16)   0           fire3/squeeze1x1[0][0]           
+__________________________________________________________________________________________________
+fire3/expand1x1 (Conv2D)        (None, 55, 55, 64)   1088        fire3/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire3/expand3x3 (Conv2D)        (None, 55, 55, 64)   9280        fire3/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire3/relu_expand1x1 (Activatio (None, 55, 55, 64)   0           fire3/expand1x1[0][0]            
+__________________________________________________________________________________________________
+fire3/relu_expand3x3 (Activatio (None, 55, 55, 64)   0           fire3/expand3x3[0][0]            
+__________________________________________________________________________________________________
+fire3/concat (Concatenate)      (None, 55, 55, 128)  0           fire3/relu_expand1x1[0][0]       
+                                                                 fire3/relu_expand3x3[0][0]       
+__________________________________________________________________________________________________
+pool3 (MaxPooling2D)            (None, 27, 27, 128)  0           fire3/concat[0][0]               
+__________________________________________________________________________________________________
+fire4/squeeze1x1 (Conv2D)       (None, 27, 27, 32)   4128        pool3[0][0]                      
+__________________________________________________________________________________________________
+fire4/relu_squeeze1x1 (Activati (None, 27, 27, 32)   0           fire4/squeeze1x1[0][0]           
+__________________________________________________________________________________________________
+fire4/expand1x1 (Conv2D)        (None, 27, 27, 128)  4224        fire4/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire4/expand3x3 (Conv2D)        (None, 27, 27, 128)  36992       fire4/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire4/relu_expand1x1 (Activatio (None, 27, 27, 128)  0           fire4/expand1x1[0][0]            
+__________________________________________________________________________________________________
+fire4/relu_expand3x3 (Activatio (None, 27, 27, 128)  0           fire4/expand3x3[0][0]            
+__________________________________________________________________________________________________
+fire4/concat (Concatenate)      (None, 27, 27, 256)  0           fire4/relu_expand1x1[0][0]       
+                                                                 fire4/relu_expand3x3[0][0]       
+__________________________________________________________________________________________________
+fire5/squeeze1x1 (Conv2D)       (None, 27, 27, 32)   8224        fire4/concat[0][0]               
+__________________________________________________________________________________________________
+fire5/relu_squeeze1x1 (Activati (None, 27, 27, 32)   0           fire5/squeeze1x1[0][0]           
+__________________________________________________________________________________________________
+fire5/expand1x1 (Conv2D)        (None, 27, 27, 128)  4224        fire5/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire5/expand3x3 (Conv2D)        (None, 27, 27, 128)  36992       fire5/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire5/relu_expand1x1 (Activatio (None, 27, 27, 128)  0           fire5/expand1x1[0][0]            
+__________________________________________________________________________________________________
+fire5/relu_expand3x3 (Activatio (None, 27, 27, 128)  0           fire5/expand3x3[0][0]            
+__________________________________________________________________________________________________
+fire5/concat (Concatenate)      (None, 27, 27, 256)  0           fire5/relu_expand1x1[0][0]       
+                                                                 fire5/relu_expand3x3[0][0]       
+__________________________________________________________________________________________________
+pool5 (MaxPooling2D)            (None, 13, 13, 256)  0           fire5/concat[0][0]               
+__________________________________________________________________________________________________
+fire6/squeeze1x1 (Conv2D)       (None, 13, 13, 48)   12336       pool5[0][0]                      
+__________________________________________________________________________________________________
+fire6/relu_squeeze1x1 (Activati (None, 13, 13, 48)   0           fire6/squeeze1x1[0][0]           
+__________________________________________________________________________________________________
+fire6/expand1x1 (Conv2D)        (None, 13, 13, 192)  9408        fire6/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire6/expand3x3 (Conv2D)        (None, 13, 13, 192)  83136       fire6/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire6/relu_expand1x1 (Activatio (None, 13, 13, 192)  0           fire6/expand1x1[0][0]            
+__________________________________________________________________________________________________
+fire6/relu_expand3x3 (Activatio (None, 13, 13, 192)  0           fire6/expand3x3[0][0]            
+__________________________________________________________________________________________________
+fire6/concat (Concatenate)      (None, 13, 13, 384)  0           fire6/relu_expand1x1[0][0]       
+                                                                 fire6/relu_expand3x3[0][0]       
+__________________________________________________________________________________________________
+fire7/squeeze1x1 (Conv2D)       (None, 13, 13, 48)   18480       fire6/concat[0][0]               
+__________________________________________________________________________________________________
+fire7/relu_squeeze1x1 (Activati (None, 13, 13, 48)   0           fire7/squeeze1x1[0][0]           
+__________________________________________________________________________________________________
+fire7/expand1x1 (Conv2D)        (None, 13, 13, 192)  9408        fire7/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire7/expand3x3 (Conv2D)        (None, 13, 13, 192)  83136       fire7/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire7/relu_expand1x1 (Activatio (None, 13, 13, 192)  0           fire7/expand1x1[0][0]            
+__________________________________________________________________________________________________
+fire7/relu_expand3x3 (Activatio (None, 13, 13, 192)  0           fire7/expand3x3[0][0]            
+__________________________________________________________________________________________________
+fire7/concat (Concatenate)      (None, 13, 13, 384)  0           fire7/relu_expand1x1[0][0]       
+                                                                 fire7/relu_expand3x3[0][0]       
+__________________________________________________________________________________________________
+fire8/squeeze1x1 (Conv2D)       (None, 13, 13, 64)   24640       fire7/concat[0][0]               
+__________________________________________________________________________________________________
+fire8/relu_squeeze1x1 (Activati (None, 13, 13, 64)   0           fire8/squeeze1x1[0][0]           
+__________________________________________________________________________________________________
+fire8/expand1x1 (Conv2D)        (None, 13, 13, 256)  16640       fire8/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire8/expand3x3 (Conv2D)        (None, 13, 13, 256)  147712      fire8/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire8/relu_expand1x1 (Activatio (None, 13, 13, 256)  0           fire8/expand1x1[0][0]            
+__________________________________________________________________________________________________
+fire8/relu_expand3x3 (Activatio (None, 13, 13, 256)  0           fire8/expand3x3[0][0]            
+__________________________________________________________________________________________________
+fire8/concat (Concatenate)      (None, 13, 13, 512)  0           fire8/relu_expand1x1[0][0]       
+                                                                 fire8/relu_expand3x3[0][0]       
+__________________________________________________________________________________________________
+fire9/squeeze1x1 (Conv2D)       (None, 13, 13, 64)   32832       fire8/concat[0][0]               
+__________________________________________________________________________________________________
+fire9/relu_squeeze1x1 (Activati (None, 13, 13, 64)   0           fire9/squeeze1x1[0][0]           
+__________________________________________________________________________________________________
+fire9/expand1x1 (Conv2D)        (None, 13, 13, 256)  16640       fire9/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire9/expand3x3 (Conv2D)        (None, 13, 13, 256)  147712      fire9/relu_squeeze1x1[0][0]      
+__________________________________________________________________________________________________
+fire9/relu_expand1x1 (Activatio (None, 13, 13, 256)  0           fire9/expand1x1[0][0]            
+__________________________________________________________________________________________________
+fire9/relu_expand3x3 (Activatio (None, 13, 13, 256)  0           fire9/expand3x3[0][0]            
+__________________________________________________________________________________________________
+fire9/concat (Concatenate)      (None, 13, 13, 512)  0           fire9/relu_expand1x1[0][0]       
+                                                                 fire9/relu_expand3x3[0][0]       
+__________________________________________________________________________________________________
+DetectoinLayer0 (Conv2D)        (None, 13, 13, 30)   15390       fire9/concat[0][0]               
+__________________________________________________________________________________________________
+reshape_1 (Reshape)             (None, 13, 13, 5, 6) 0           DetectoinLayer0[0][0]            
+__________________________________________________________________________________________________
+input_1 (InputLayer)            (None, 1, 1, 1, 10,  0                                            
+__________________________________________________________________________________________________
+lambda_1 (Lambda)               (None, 13, 13, 5, 6) 0           reshape_1[0][0]                  
+                                                                 input_1[0][0]                    
+==================================================================================================
+Total params: 737,886
+Trainable params: 737,886
+Non-trainable params: 0
+__________________________________________________________________________________________________
+Parsing Inputs...
+
+=========================Options=============================
+-max_depth                  10000
+-min_bytes                  0
+-min_peak_bytes             0
+-min_residual_bytes         0
+-min_output_bytes           0
+-min_micros                 0
+-min_accelerator_micros     0
+-min_cpu_micros             0
+-min_params                 0
+-min_float_ops              0
+-min_occurrence             0
+-step                       -1
+-order_by                   name
+-account_type_regexes       _trainable_variables
+-start_name_regexes         .*
+-trim_name_regexes          
+-show_name_regexes          .*
+-hide_name_regexes          
+-account_displayed_op_only  true
+-select                     params
+-output                     stdout:
+
+==================Model Analysis Report======================
+node name | # parameters
+_TFProfRoot (--/737.89k params)
+  DetectoinLayer0 (--/15.39k params)
+    DetectoinLayer0/bias (30, 30/30 params)
+    DetectoinLayer0/kernel (1x1x512x30, 15.36k/15.36k params)
+  conv1 (--/1.79k params)
+    conv1/bias (64, 64/64 params)
+    conv1/kernel (3x3x3x64, 1.73k/1.73k params)
+  fire2 (--/11.41k params)
+    fire2/expand1x1 (--/1.09k params)
+      fire2/expand1x1/bias (64, 64/64 params)
+      fire2/expand1x1/kernel (1x1x16x64, 1.02k/1.02k params)
+    fire2/expand3x3 (--/9.28k params)
+      fire2/expand3x3/bias (64, 64/64 params)
+      fire2/expand3x3/kernel (3x3x16x64, 9.22k/9.22k params)
+    fire2/squeeze1x1 (--/1.04k params)
+      fire2/squeeze1x1/bias (16, 16/16 params)
+      fire2/squeeze1x1/kernel (1x1x64x16, 1.02k/1.02k params)
+  fire3 (--/12.43k params)
+    fire3/expand1x1 (--/1.09k params)
+      fire3/expand1x1/bias (64, 64/64 params)
+      fire3/expand1x1/kernel (1x1x16x64, 1.02k/1.02k params)
+    fire3/expand3x3 (--/9.28k params)
+      fire3/expand3x3/bias (64, 64/64 params)
+      fire3/expand3x3/kernel (3x3x16x64, 9.22k/9.22k params)
+    fire3/squeeze1x1 (--/2.06k params)
+      fire3/squeeze1x1/bias (16, 16/16 params)
+      fire3/squeeze1x1/kernel (1x1x128x16, 2.05k/2.05k params)
+  fire4 (--/45.34k params)
+    fire4/expand1x1 (--/4.22k params)
+      fire4/expand1x1/bias (128, 128/128 params)
+      fire4/expand1x1/kernel (1x1x32x128, 4.10k/4.10k params)
+    fire4/expand3x3 (--/36.99k params)
+      fire4/expand3x3/bias (128, 128/128 params)
+      fire4/expand3x3/kernel (3x3x32x128, 36.86k/36.86k params)
+    fire4/squeeze1x1 (--/4.13k params)
+      fire4/squeeze1x1/bias (32, 32/32 params)
+      fire4/squeeze1x1/kernel (1x1x128x32, 4.10k/4.10k params)
+  fire5 (--/49.44k params)
+    fire5/expand1x1 (--/4.22k params)
+      fire5/expand1x1/bias (128, 128/128 params)
+      fire5/expand1x1/kernel (1x1x32x128, 4.10k/4.10k params)
+    fire5/expand3x3 (--/36.99k params)
+      fire5/expand3x3/bias (128, 128/128 params)
+      fire5/expand3x3/kernel (3x3x32x128, 36.86k/36.86k params)
+    fire5/squeeze1x1 (--/8.22k params)
+      fire5/squeeze1x1/bias (32, 32/32 params)
+      fire5/squeeze1x1/kernel (1x1x256x32, 8.19k/8.19k params)
+  fire6 (--/104.88k params)
+    fire6/expand1x1 (--/9.41k params)
+      fire6/expand1x1/bias (192, 192/192 params)
+      fire6/expand1x1/kernel (1x1x48x192, 9.22k/9.22k params)
+    fire6/expand3x3 (--/83.14k params)
+      fire6/expand3x3/bias (192, 192/192 params)
+      fire6/expand3x3/kernel (3x3x48x192, 82.94k/82.94k params)
+    fire6/squeeze1x1 (--/12.34k params)
+      fire6/squeeze1x1/bias (48, 48/48 params)
+      fire6/squeeze1x1/kernel (1x1x256x48, 12.29k/12.29k params)
+  fire7 (--/111.02k params)
+    fire7/expand1x1 (--/9.41k params)
+      fire7/expand1x1/bias (192, 192/192 params)
+      fire7/expand1x1/kernel (1x1x48x192, 9.22k/9.22k params)
+    fire7/expand3x3 (--/83.14k params)
+      fire7/expand3x3/bias (192, 192/192 params)
+      fire7/expand3x3/kernel (3x3x48x192, 82.94k/82.94k params)
+    fire7/squeeze1x1 (--/18.48k params)
+      fire7/squeeze1x1/bias (48, 48/48 params)
+      fire7/squeeze1x1/kernel (1x1x384x48, 18.43k/18.43k params)
+  fire8 (--/188.99k params)
+    fire8/expand1x1 (--/16.64k params)
+      fire8/expand1x1/bias (256, 256/256 params)
+      fire8/expand1x1/kernel (1x1x64x256, 16.38k/16.38k params)
+    fire8/expand3x3 (--/147.71k params)
+      fire8/expand3x3/bias (256, 256/256 params)
+      fire8/expand3x3/kernel (3x3x64x256, 147.46k/147.46k params)
+    fire8/squeeze1x1 (--/24.64k params)
+      fire8/squeeze1x1/bias (64, 64/64 params)
+      fire8/squeeze1x1/kernel (1x1x384x64, 24.58k/24.58k params)
+  fire9 (--/197.18k params)
+    fire9/expand1x1 (--/16.64k params)
+      fire9/expand1x1/bias (256, 256/256 params)
+      fire9/expand1x1/kernel (1x1x64x256, 16.38k/16.38k params)
+    fire9/expand3x3 (--/147.71k params)
+      fire9/expand3x3/bias (256, 256/256 params)
+      fire9/expand3x3/kernel (3x3x64x256, 147.46k/147.46k params)
+    fire9/squeeze1x1 (--/32.83k params)
+      fire9/squeeze1x1/bias (64, 64/64 params)
+      fire9/squeeze1x1/kernel (1x1x512x64, 32.77k/32.77k params)
+
+======================End of Report==========================
+Parsing Inputs...
+
+=========================Options=============================
+-max_depth                  10000
+-min_bytes                  0
+-min_peak_bytes             0
+-min_residual_bytes         0
+-min_output_bytes           0
+-min_micros                 0
+-min_accelerator_micros     0
+-min_cpu_micros             0
+-min_params                 0
+-min_float_ops              1
+-min_occurrence             0
+-step                       -1
+-order_by                   float_ops
+-account_type_regexes       .*
+-start_name_regexes         .*
+-trim_name_regexes          
+-show_name_regexes          .*
+-hide_name_regexes          
+-account_displayed_op_only  true
+-select                     float_ops
+-output                     stdout:
+
+==================Model Analysis Report======================
+node name | # float_ops
+Conv2D                   530.44m float_ops (100.00%, 98.72%)
+MaxPool                  2.97m float_ops (1.28%, 0.55%)
+BiasAdd                  2.43m float_ops (0.72%, 0.45%)
+Add                      734.91k float_ops (0.27%, 0.14%)
+Mul                      734.91k float_ops (0.14%, 0.14%)
+Sub                         26 float_ops (0.00%, 0.00%)
+
+======================End of Report==========================
+flops_total: 537,306,408 --- params_total 737,886

@@ -1,0 +1,287 @@
+mobilenet
+Tensor("mobilenet_1.00_224/conv_pw_13_relu/Minimum:0", shape=(?, 7, 7, 1024), dtype=float32)
+Tensor("DetectoinLayer0/BiasAdd:0", shape=(?, 7, 7, 30), dtype=float32)
+Tensor("lambda_1/Identity:0", shape=(?, 7, 7, 5, 6), dtype=float32)
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+input1 (InputLayer)             (None, 224, 224, 3)  0                                            
+__________________________________________________________________________________________________
+mobilenet_1.00_224 (Model)      (None, 7, 7, 1024)   3228864     input1[0][0]                     
+__________________________________________________________________________________________________
+DetectoinLayer0 (Conv2D)        (None, 7, 7, 30)     30750       mobilenet_1.00_224[1][0]         
+__________________________________________________________________________________________________
+reshape_1 (Reshape)             (None, 7, 7, 5, 6)   0           DetectoinLayer0[0][0]            
+__________________________________________________________________________________________________
+input_1 (InputLayer)            (None, 1, 1, 1, 10,  0                                            
+__________________________________________________________________________________________________
+lambda_1 (Lambda)               (None, 7, 7, 5, 6)   0           reshape_1[0][0]                  
+                                                                 input_1[0][0]                    
+==================================================================================================
+Total params: 3,259,614
+Trainable params: 3,237,726
+Non-trainable params: 21,888
+__________________________________________________________________________________________________
+Parsing Inputs...
+
+=========================Options=============================
+-max_depth                  10000
+-min_bytes                  0
+-min_peak_bytes             0
+-min_residual_bytes         0
+-min_output_bytes           0
+-min_micros                 0
+-min_accelerator_micros     0
+-min_cpu_micros             0
+-min_params                 0
+-min_float_ops              0
+-min_occurrence             0
+-step                       -1
+-order_by                   name
+-account_type_regexes       _trainable_variables
+-start_name_regexes         .*
+-trim_name_regexes          
+-show_name_regexes          .*
+-hide_name_regexes          
+-account_displayed_op_only  true
+-select                     params
+-output                     stdout:
+
+==================Model Analysis Report======================
+node name | # parameters
+_TFProfRoot (--/3.26m params)
+  DetectoinLayer0 (--/30.75k params)
+    DetectoinLayer0/bias (30, 30/30 params)
+    DetectoinLayer0/kernel (1x1x1024x30, 30.72k/30.72k params)
+  conv1 (--/864 params)
+    conv1/kernel (3x3x3x32, 864/864 params)
+  conv1_bn (--/128 params)
+    conv1_bn/beta (32, 32/32 params)
+    conv1_bn/gamma (32, 32/32 params)
+    conv1_bn/moving_mean (32, 32/32 params)
+    conv1_bn/moving_variance (32, 32/32 params)
+  conv_dw_1 (--/288 params)
+    conv_dw_1/depthwise_kernel (3x3x32x1, 288/288 params)
+  conv_dw_10 (--/4.61k params)
+    conv_dw_10/depthwise_kernel (3x3x512x1, 4.61k/4.61k params)
+  conv_dw_10_bn (--/2.05k params)
+    conv_dw_10_bn/beta (512, 512/512 params)
+    conv_dw_10_bn/gamma (512, 512/512 params)
+    conv_dw_10_bn/moving_mean (512, 512/512 params)
+    conv_dw_10_bn/moving_variance (512, 512/512 params)
+  conv_dw_11 (--/4.61k params)
+    conv_dw_11/depthwise_kernel (3x3x512x1, 4.61k/4.61k params)
+  conv_dw_11_bn (--/2.05k params)
+    conv_dw_11_bn/beta (512, 512/512 params)
+    conv_dw_11_bn/gamma (512, 512/512 params)
+    conv_dw_11_bn/moving_mean (512, 512/512 params)
+    conv_dw_11_bn/moving_variance (512, 512/512 params)
+  conv_dw_12 (--/4.61k params)
+    conv_dw_12/depthwise_kernel (3x3x512x1, 4.61k/4.61k params)
+  conv_dw_12_bn (--/2.05k params)
+    conv_dw_12_bn/beta (512, 512/512 params)
+    conv_dw_12_bn/gamma (512, 512/512 params)
+    conv_dw_12_bn/moving_mean (512, 512/512 params)
+    conv_dw_12_bn/moving_variance (512, 512/512 params)
+  conv_dw_13 (--/9.22k params)
+    conv_dw_13/depthwise_kernel (3x3x1024x1, 9.22k/9.22k params)
+  conv_dw_13_bn (--/4.10k params)
+    conv_dw_13_bn/beta (1024, 1.02k/1.02k params)
+    conv_dw_13_bn/gamma (1024, 1.02k/1.02k params)
+    conv_dw_13_bn/moving_mean (1024, 1.02k/1.02k params)
+    conv_dw_13_bn/moving_variance (1024, 1.02k/1.02k params)
+  conv_dw_1_bn (--/128 params)
+    conv_dw_1_bn/beta (32, 32/32 params)
+    conv_dw_1_bn/gamma (32, 32/32 params)
+    conv_dw_1_bn/moving_mean (32, 32/32 params)
+    conv_dw_1_bn/moving_variance (32, 32/32 params)
+  conv_dw_2 (--/576 params)
+    conv_dw_2/depthwise_kernel (3x3x64x1, 576/576 params)
+  conv_dw_2_bn (--/256 params)
+    conv_dw_2_bn/beta (64, 64/64 params)
+    conv_dw_2_bn/gamma (64, 64/64 params)
+    conv_dw_2_bn/moving_mean (64, 64/64 params)
+    conv_dw_2_bn/moving_variance (64, 64/64 params)
+  conv_dw_3 (--/1.15k params)
+    conv_dw_3/depthwise_kernel (3x3x128x1, 1.15k/1.15k params)
+  conv_dw_3_bn (--/512 params)
+    conv_dw_3_bn/beta (128, 128/128 params)
+    conv_dw_3_bn/gamma (128, 128/128 params)
+    conv_dw_3_bn/moving_mean (128, 128/128 params)
+    conv_dw_3_bn/moving_variance (128, 128/128 params)
+  conv_dw_4 (--/1.15k params)
+    conv_dw_4/depthwise_kernel (3x3x128x1, 1.15k/1.15k params)
+  conv_dw_4_bn (--/512 params)
+    conv_dw_4_bn/beta (128, 128/128 params)
+    conv_dw_4_bn/gamma (128, 128/128 params)
+    conv_dw_4_bn/moving_mean (128, 128/128 params)
+    conv_dw_4_bn/moving_variance (128, 128/128 params)
+  conv_dw_5 (--/2.30k params)
+    conv_dw_5/depthwise_kernel (3x3x256x1, 2.30k/2.30k params)
+  conv_dw_5_bn (--/1.02k params)
+    conv_dw_5_bn/beta (256, 256/256 params)
+    conv_dw_5_bn/gamma (256, 256/256 params)
+    conv_dw_5_bn/moving_mean (256, 256/256 params)
+    conv_dw_5_bn/moving_variance (256, 256/256 params)
+  conv_dw_6 (--/2.30k params)
+    conv_dw_6/depthwise_kernel (3x3x256x1, 2.30k/2.30k params)
+  conv_dw_6_bn (--/1.02k params)
+    conv_dw_6_bn/beta (256, 256/256 params)
+    conv_dw_6_bn/gamma (256, 256/256 params)
+    conv_dw_6_bn/moving_mean (256, 256/256 params)
+    conv_dw_6_bn/moving_variance (256, 256/256 params)
+  conv_dw_7 (--/4.61k params)
+    conv_dw_7/depthwise_kernel (3x3x512x1, 4.61k/4.61k params)
+  conv_dw_7_bn (--/2.05k params)
+    conv_dw_7_bn/beta (512, 512/512 params)
+    conv_dw_7_bn/gamma (512, 512/512 params)
+    conv_dw_7_bn/moving_mean (512, 512/512 params)
+    conv_dw_7_bn/moving_variance (512, 512/512 params)
+  conv_dw_8 (--/4.61k params)
+    conv_dw_8/depthwise_kernel (3x3x512x1, 4.61k/4.61k params)
+  conv_dw_8_bn (--/2.05k params)
+    conv_dw_8_bn/beta (512, 512/512 params)
+    conv_dw_8_bn/gamma (512, 512/512 params)
+    conv_dw_8_bn/moving_mean (512, 512/512 params)
+    conv_dw_8_bn/moving_variance (512, 512/512 params)
+  conv_dw_9 (--/4.61k params)
+    conv_dw_9/depthwise_kernel (3x3x512x1, 4.61k/4.61k params)
+  conv_dw_9_bn (--/2.05k params)
+    conv_dw_9_bn/beta (512, 512/512 params)
+    conv_dw_9_bn/gamma (512, 512/512 params)
+    conv_dw_9_bn/moving_mean (512, 512/512 params)
+    conv_dw_9_bn/moving_variance (512, 512/512 params)
+  conv_pw_1 (--/2.05k params)
+    conv_pw_1/kernel (1x1x32x64, 2.05k/2.05k params)
+  conv_pw_10 (--/262.14k params)
+    conv_pw_10/kernel (1x1x512x512, 262.14k/262.14k params)
+  conv_pw_10_bn (--/2.05k params)
+    conv_pw_10_bn/beta (512, 512/512 params)
+    conv_pw_10_bn/gamma (512, 512/512 params)
+    conv_pw_10_bn/moving_mean (512, 512/512 params)
+    conv_pw_10_bn/moving_variance (512, 512/512 params)
+  conv_pw_11 (--/262.14k params)
+    conv_pw_11/kernel (1x1x512x512, 262.14k/262.14k params)
+  conv_pw_11_bn (--/2.05k params)
+    conv_pw_11_bn/beta (512, 512/512 params)
+    conv_pw_11_bn/gamma (512, 512/512 params)
+    conv_pw_11_bn/moving_mean (512, 512/512 params)
+    conv_pw_11_bn/moving_variance (512, 512/512 params)
+  conv_pw_12 (--/524.29k params)
+    conv_pw_12/kernel (1x1x512x1024, 524.29k/524.29k params)
+  conv_pw_12_bn (--/4.10k params)
+    conv_pw_12_bn/beta (1024, 1.02k/1.02k params)
+    conv_pw_12_bn/gamma (1024, 1.02k/1.02k params)
+    conv_pw_12_bn/moving_mean (1024, 1.02k/1.02k params)
+    conv_pw_12_bn/moving_variance (1024, 1.02k/1.02k params)
+  conv_pw_13 (--/1.05m params)
+    conv_pw_13/kernel (1x1x1024x1024, 1.05m/1.05m params)
+  conv_pw_13_bn (--/4.10k params)
+    conv_pw_13_bn/beta (1024, 1.02k/1.02k params)
+    conv_pw_13_bn/gamma (1024, 1.02k/1.02k params)
+    conv_pw_13_bn/moving_mean (1024, 1.02k/1.02k params)
+    conv_pw_13_bn/moving_variance (1024, 1.02k/1.02k params)
+  conv_pw_1_bn (--/256 params)
+    conv_pw_1_bn/beta (64, 64/64 params)
+    conv_pw_1_bn/gamma (64, 64/64 params)
+    conv_pw_1_bn/moving_mean (64, 64/64 params)
+    conv_pw_1_bn/moving_variance (64, 64/64 params)
+  conv_pw_2 (--/8.19k params)
+    conv_pw_2/kernel (1x1x64x128, 8.19k/8.19k params)
+  conv_pw_2_bn (--/512 params)
+    conv_pw_2_bn/beta (128, 128/128 params)
+    conv_pw_2_bn/gamma (128, 128/128 params)
+    conv_pw_2_bn/moving_mean (128, 128/128 params)
+    conv_pw_2_bn/moving_variance (128, 128/128 params)
+  conv_pw_3 (--/16.38k params)
+    conv_pw_3/kernel (1x1x128x128, 16.38k/16.38k params)
+  conv_pw_3_bn (--/512 params)
+    conv_pw_3_bn/beta (128, 128/128 params)
+    conv_pw_3_bn/gamma (128, 128/128 params)
+    conv_pw_3_bn/moving_mean (128, 128/128 params)
+    conv_pw_3_bn/moving_variance (128, 128/128 params)
+  conv_pw_4 (--/32.77k params)
+    conv_pw_4/kernel (1x1x128x256, 32.77k/32.77k params)
+  conv_pw_4_bn (--/1.02k params)
+    conv_pw_4_bn/beta (256, 256/256 params)
+    conv_pw_4_bn/gamma (256, 256/256 params)
+    conv_pw_4_bn/moving_mean (256, 256/256 params)
+    conv_pw_4_bn/moving_variance (256, 256/256 params)
+  conv_pw_5 (--/65.54k params)
+    conv_pw_5/kernel (1x1x256x256, 65.54k/65.54k params)
+  conv_pw_5_bn (--/1.02k params)
+    conv_pw_5_bn/beta (256, 256/256 params)
+    conv_pw_5_bn/gamma (256, 256/256 params)
+    conv_pw_5_bn/moving_mean (256, 256/256 params)
+    conv_pw_5_bn/moving_variance (256, 256/256 params)
+  conv_pw_6 (--/131.07k params)
+    conv_pw_6/kernel (1x1x256x512, 131.07k/131.07k params)
+  conv_pw_6_bn (--/2.05k params)
+    conv_pw_6_bn/beta (512, 512/512 params)
+    conv_pw_6_bn/gamma (512, 512/512 params)
+    conv_pw_6_bn/moving_mean (512, 512/512 params)
+    conv_pw_6_bn/moving_variance (512, 512/512 params)
+  conv_pw_7 (--/262.14k params)
+    conv_pw_7/kernel (1x1x512x512, 262.14k/262.14k params)
+  conv_pw_7_bn (--/2.05k params)
+    conv_pw_7_bn/beta (512, 512/512 params)
+    conv_pw_7_bn/gamma (512, 512/512 params)
+    conv_pw_7_bn/moving_mean (512, 512/512 params)
+    conv_pw_7_bn/moving_variance (512, 512/512 params)
+  conv_pw_8 (--/262.14k params)
+    conv_pw_8/kernel (1x1x512x512, 262.14k/262.14k params)
+  conv_pw_8_bn (--/2.05k params)
+    conv_pw_8_bn/beta (512, 512/512 params)
+    conv_pw_8_bn/gamma (512, 512/512 params)
+    conv_pw_8_bn/moving_mean (512, 512/512 params)
+    conv_pw_8_bn/moving_variance (512, 512/512 params)
+  conv_pw_9 (--/262.14k params)
+    conv_pw_9/kernel (1x1x512x512, 262.14k/262.14k params)
+  conv_pw_9_bn (--/2.05k params)
+    conv_pw_9_bn/beta (512, 512/512 params)
+    conv_pw_9_bn/gamma (512, 512/512 params)
+    conv_pw_9_bn/moving_mean (512, 512/512 params)
+    conv_pw_9_bn/moving_variance (512, 512/512 params)
+
+======================End of Report==========================
+Parsing Inputs...
+
+=========================Options=============================
+-max_depth                  10000
+-min_bytes                  0
+-min_peak_bytes             0
+-min_residual_bytes         0
+-min_output_bytes           0
+-min_micros                 0
+-min_accelerator_micros     0
+-min_cpu_micros             0
+-min_params                 0
+-min_float_ops              1
+-min_occurrence             0
+-step                       -1
+-order_by                   float_ops
+-account_type_regexes       .*
+-start_name_regexes         .*
+-trim_name_regexes          
+-show_name_regexes          .*
+-hide_name_regexes          
+-account_displayed_op_only  true
+-select                     float_ops
+-output                     stdout:
+
+==================Model Analysis Report======================
+node name | # float_ops
+Conv2D                   1.10b float_ops (100.00%, 95.10%)
+DepthwiseConv2dNative    34.77m float_ops (4.90%, 3.00%)
+Mul                      8.37m float_ops (1.90%, 0.72%)
+Add                      8.28m float_ops (1.18%, 0.72%)
+Minimum                  5.04m float_ops (0.46%, 0.44%)
+Sub                      109.74k float_ops (0.02%, 0.01%)
+AssignSub                87.55k float_ops (0.02%, 0.01%)
+RealDiv                  43.83k float_ops (0.01%, 0.00%)
+Rsqrt                    43.78k float_ops (0.00%, 0.00%)
+Pow                        108 float_ops (0.00%, 0.00%)
+AssignAdd                  108 float_ops (0.00%, 0.00%)
+
+======================End of Report==========================
+1,157,408,824 --- 3,259,614
