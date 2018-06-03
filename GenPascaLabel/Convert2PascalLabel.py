@@ -20,8 +20,8 @@ def AnnotateXML(fidx,imw,imh,xmin,ymin,xmax,ymax):
 
     tree = et.parse("pascal_anno_template.xml")
     root = tree.getroot()
-    print("root ",root)
-    print("parasing template xml")
+    print("root is ",root)
+    print("......parasing template xml")
 
     #annotating the correct XML file
     tree.find('filename').text           = imgfname 
@@ -35,6 +35,7 @@ def AnnotateXML(fidx,imw,imh,xmin,ymin,xmax,ymax):
     tree.find('object/bndbox/ymax').text = str(ymax)
 
     tree.write(annfname)
+    print("......generated ", annfname)
 
 
 
