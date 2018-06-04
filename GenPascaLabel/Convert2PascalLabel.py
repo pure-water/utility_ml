@@ -16,21 +16,19 @@ def EncodeClassToIdx(classname) :
         featureids = 0
     return featureids
 
-def AnnotateXML(fidx,imw,imh,xmin,ymin,xmax,ymax):
+def AnnotateXML(fidx,imw,imh,xmin,ymin,xmax,ymax,imgfname,annfname):
   #load xml template
   #replace the certain value
-    imgfname = "yaoxiang-" + str(fidx) + ".jpg" 
-    annfname = "yaoxiang-" + str(fidx) + ".xml"
-    fullpathname = "./image/" + imgfname
+    #annfname = EncodeClassToIdx(classname) + str(fidx) + ".xml"
 
     tree = et.parse("pascal_anno_template.xml")
     root = tree.getroot()
-    print("root is ",root)
-    print("......parasing template xml")
+    #print("root is ",root)
+    #print("......parasing template xml")
 
     #annotating the correct XML file
-    tree.find('filename').text           = imgfname 
-    tree.find('path').text               = fullpathname
+    tree.find('filename').text           = os.path.basename(imgfname) 
+    tree.find('path').text               = imgfname 
     tree.find('size/width').text         = str(imw)
     tree.find('size/height').text        = str(imh)
     tree.find('object/name').text        = classname 
@@ -41,7 +39,6 @@ def AnnotateXML(fidx,imw,imh,xmin,ymin,xmax,ymax):
 
     tree.write(annfname)
     print("......generated ", annfname)
-    return 0
 
 
 def ExtractXY(RawFile) : 
@@ -51,37 +48,29 @@ def ExtractXY(RawFile) :
     #lines = RawLabel.read().split('\r\n')   #for ubuntu, use "\r\n" instead of "\n"
     lines = RawLabel.read().split('\n')   #for ubuntu, use "\r\n" instead of "\n"
   
-    print("...extracing raw file from label file")
+    #print("...Extracting from label file",RawFile)
 
     ct = 0
     for line in lines:
-        #print('lenth of line is: ')
         if(len(line) >= 2):
             ct = ct + 1
-            print(line + "\n")
             elems = line.split(' ')
-            print(elems)
             xmin = elems[0]
             xmax = elems[2]
             ymin = elems[1]
             ymax = elems[3]
-            #
-            #img_path = str('%s/images/%s/%s.JPEG'%(wd, cls, os.path.splitext(RawFile)[0]))
-            #t = magic.from_file(img_path)
-            #wh= re.search('(\d+) x (\d+)', t).groups()
-            #im=Image.open(img_path)
-            #imw= int(im.size[0])
-            #imh= int(im.size[1])
-            #w = int(xmax) - int(xmin)
-            #h = int(ymax) - int(ymin)
-            # print(xmin)
-            #print(w, h)
-            imw = 0
-            imh = 0
-    return (imw,imh, xmin,ymin,xmax,ymax)
+    return (xmin,ymin,xmax,ymax)
 
 
+def ExtractImageSize(ImageFile) :
 
+    #print("...Extracing image size from image file",ImageFile)
+
+    im=Image.open(ImageFile)
+    imw= int(im.size[0])
+    imh= int(im.size[1])
+
+    return (imw,imh)
 
 def ProcessDataSet(RootDirOfDataSet):
 
@@ -91,20 +80,35 @@ def ProcessDataSet(RootDirOfDataSet):
      |
      |
      |----Labels(input)---encode(classname)
-     |----Images(input)
+     |----Images(input)---encode(classname)
      |----Annotations(output)
      """
      labeldir      = RootDirOfDataSet +  "/Labels/"   + str(EncodeClassToIdx(classname)) 
-     annotatoindir = RootDirOfDataSet + "_pascal_format/" + "/Annotations/  
+     annotationdir = RootDirOfDataSet + "_pascal_format/" + "Annotations/"  
+
+     cmd = "mkdir -p " + annotationdir + "0"
+     #print(cmd)
+     os.system(cmd)
+     
+     cnt = 0
      
      for AlableFile in os.listdir(labeldir) :
-        FlableFilePath = labeldir + "/" + AlableFile
 
-        imw,imh,xmin,ymin,xmax,ymax  = ExtractXY(FlableFilePath)
-        print FlableFilePath
+        idx = os.path.splitext(AlableFile)[0]
+        FlableFilePath = labeldir + "/" + AlableFile
+        FImageFilePath = RootDirOfDataSet + "/Images/" + str(EncodeClassToIdx(classname)) + "/" + str(idx) + ".jpg"
+        annfname = annotationdir + str(EncodeClassToIdx(classname)) + "/" + str(idx) + ".xml"
+        #print(annfname)
+
+        #Extract Raw Lable Data  
+        xmin,ymin,xmax,ymax  = ExtractXY(FlableFilePath)
+        imw,imh              = ExtractImageSize(FImageFilePath)
+        AnnotateXML(idx,imw,imh,xmin,ymin,xmax,ymax,FImageFilePath,annfname)
+
+        cnt += 1 
+
+     print("Number of DataSet in image",cnt)
 
 if __name__ == '__main__':
-   imw,imh,xmin,ymin,xmax,ymax  = ExtractXY('label_rawout_01.txt')
-   print("xmin",xmin)
-   AnnotateXML(0,640,480,0,0,640,480) 
+
    ProcessDataSet(DirDatasetRoot)
