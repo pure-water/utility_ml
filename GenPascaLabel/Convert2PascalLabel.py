@@ -7,9 +7,14 @@ import os
 
 wd = os.getcwd()
 classname = "yaoxiang"
+DirDatasetRoot = "train_dataset"
 print("current working directry should be one level above the pos")
 print(wd)
 
+def EncodeClassToIdx(classname) : 
+    if classname == "yaoxiang" :
+        featureids = 0
+    return featureids
 
 def AnnotateXML(fidx,imw,imh,xmin,ymin,xmax,ymax):
   #load xml template
@@ -36,21 +41,21 @@ def AnnotateXML(fidx,imw,imh,xmin,ymin,xmax,ymax):
 
     tree.write(annfname)
     print("......generated ", annfname)
+    return 0
 
 
+def ExtractXY(RawFile) : 
 
-"""
-def ExtractXY(RawFile) ：
+    RawLabel = open(RawFile)
 
-    RawLabel = open(RawFilw,r)
-
-    lines = RawLabel.read().split('\r\n')   #for ubuntu, use "\r\n" instead of "\n"
+    #lines = RawLabel.read().split('\r\n')   #for ubuntu, use "\r\n" instead of "\n"
+    lines = RawLabel.read().split('\n')   #for ubuntu, use "\r\n" instead of "\n"
+  
+    print("...extracing raw file from label file")
 
     ct = 0
     for line in lines:
         #print('lenth of line is: ')
-        #print(len(line))
-        #print('\n')
         if(len(line) >= 2):
             ct = ct + 1
             print(line + "\n")
@@ -61,26 +66,45 @@ def ExtractXY(RawFile) ：
             ymin = elems[1]
             ymax = elems[3]
             #
-            img_path = str('%s/images/%s/%s.JPEG'%(wd, cls, os.path.splitext(RawFile)[0]))
+            #img_path = str('%s/images/%s/%s.JPEG'%(wd, cls, os.path.splitext(RawFile)[0]))
             #t = magic.from_file(img_path)
             #wh= re.search('(\d+) x (\d+)', t).groups()
-            im=Image.open(img_path)
-            imw= int(im.size[0])
-            imh= int(im.size[1])
+            #im=Image.open(img_path)
+            #imw= int(im.size[0])
+            #imh= int(im.size[1])
             #w = int(xmax) - int(xmin)
             #h = int(ymax) - int(ymin)
             # print(xmin)
-            print(w, h)
+            #print(w, h)
+            imw = 0
+            imh = 0
     return (imw,imh, xmin,ymin,xmax,ymax)
 
 
 
 
+def ProcessDataSet(RootDirOfDataSet):
 
-def LabelDir():
+     """
+     Suppose the file directory is as follows:
+     dataset
+     |
+     |
+     |----Labels(input)---encode(classname)
+     |----Images(input)
+     |----Annotations(output)
+     """
+     labeldir      = RootDirOfDataSet +  "/Labels/"   + str(EncodeClassToIdx(classname)) 
+     annotatoindir = RootDirOfDataSet + "_pascal_format/" + "/Annotations/  
+     
+     for AlableFile in os.listdir(labeldir) :
+        FlableFilePath = labeldir + "/" + AlableFile
 
-"""
-"""
-"""
+        imw,imh,xmin,ymin,xmax,ymax  = ExtractXY(FlableFilePath)
+        print FlableFilePath
+
 if __name__ == '__main__':
-   AnnotateXML(0,640,480,0,0,640,480)
+   imw,imh,xmin,ymin,xmax,ymax  = ExtractXY('label_rawout_01.txt')
+   print("xmin",xmin)
+   AnnotateXML(0,640,480,0,0,640,480) 
+   ProcessDataSet(DirDatasetRoot)
