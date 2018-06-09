@@ -4,10 +4,11 @@
 from PIL import Image
 from xml.etree import ElementTree as et
 import os
+import argparse
 
 wd = os.getcwd()
 classname = "yaoxiang"
-DirDatasetRoot = "train_dataset"
+
 print("current working directry should be one level above the pos")
 print(wd)
 
@@ -101,6 +102,7 @@ def ProcessDataSet(RootDirOfDataSet):
         #print(annfname)
 
         #Extract Raw Lable Data  
+        print("processing file",FlableFilePath)
         xmin,ymin,xmax,ymax  = ExtractXY(FlableFilePath)
         imw,imh              = ExtractImageSize(FImageFilePath)
         AnnotateXML(idx,imw,imh,xmin,ymin,xmax,ymax,FImageFilePath,annfname)
@@ -110,5 +112,15 @@ def ProcessDataSet(RootDirOfDataSet):
      print("Number of DataSet in image",cnt)
 
 if __name__ == '__main__':
+    #Parser agument
 
-   ProcessDataSet(DirDatasetRoot)
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        '--dirpath', dest='rootdirpath', action='store', default="", help='please input the path of the directory')
+
+    args = parser.parse_args()
+
+     
+
+    ProcessDataSet(args.rootdirpath)
